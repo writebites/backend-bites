@@ -1,0 +1,36 @@
+{
+  "name": "writing-snippets-backend",
+  "version": "1.0.0",
+  "description": "This is a personal project. The vision is to have an app where users can practice their writing and critiquing skills daily.",
+  "main": "index.js",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cross-env": "^7.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^3.21.2",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.20.9",
+    "pg": "^7.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2",
+    "sqlite3": "^4.1.1",
+    "supertest": "^4.0.2",
+    "jest": "^25.1.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allie-rae/writing-snippets-backend.git"
+  },
+  "author": "Allie Robinson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/allie-rae/writing-snippets-backend/issues"
+  },
+  "homepage": "https://github.com/allie-rae/writing-snippets-backend#readme"
+}
