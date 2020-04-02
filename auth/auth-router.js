@@ -30,9 +30,13 @@ function userPassCheck(req, res, next) {
       errorMessage: "Invalid request. Please input a username and password."
     });
   } else if (!username) {
-    res.status(400).json({ errorMessage: "Please input a username." });
+    res
+      .status(400)
+      .json({ errorMessage: "Invalid request. Please input a username." });
   } else if (!password) {
-    res.status(400).json({ errorMessage: "Please input a password." });
+    res
+      .status(400)
+      .json({ errorMessage: "Invalid request. Please input a password." });
   } else {
     next();
   }

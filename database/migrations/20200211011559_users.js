@@ -6,7 +6,7 @@ exports.up = function(knex) {
         .varchar("username", 50)
         .notNullable()
         .unique();
-      tbl.varchar("password", 255).notNullable();
+      tbl.varchar("password", 3000).notNullable();
     })
     .createTable("posts", tbl => {
       tbl.increments();
