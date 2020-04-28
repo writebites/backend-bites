@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const router = require("express").Router();
 const { jwtSecret } = require("../config/secrets");
-const Users = require("../users/users-model");
+const Users = require("./auth-model");
 
 // Register user
 router.post("/register", userPassCheck, (req, res) => {
@@ -11,14 +11,37 @@ router.post("/register", userPassCheck, (req, res) => {
   user.password = hash;
 
   Users.add(user)
-    .then(id => {
-      res.status(201).json({ message: "Success!" });
+    .then((id) => {
+      const token = signToken(user);
+      res.status(201).json({ token });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res
         .status(500)
         .json({ errorMessage: "Error registering user to database." });
+    });
+});
+
+// User login
+router.post("/login", userPassCheck, (req, res) => {
+  const { username, password } = req.body;
+
+  Users.findByUsername(username)
+    .first()
+    .then((user) => {
+      if (user && bcrypt.compareSync(password, user.password)) {
+        const token = signToken(user);
+        res.status(200).json({ token });
+      } else {
+        res.status(401).json({ errorMessage: "Invalid credentials." });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res
+        .status(500)
+        .json({ errorMessage: "Database error while logging in." });
     });
 });
 
@@ -27,7 +50,7 @@ function userPassCheck(req, res, next) {
   const { username, password } = req.body;
   if (!password && !username) {
     res.status(400).json({
-      errorMessage: "Invalid request. Please input a username and password."
+      errorMessage: "Invalid request. Please input a username and password.",
     });
   } else if (!username) {
     res
@@ -40,6 +63,18 @@ function userPassCheck(req, res, next) {
   } else {
     next();
   }
+}
+
+function signToken(user) {
+  const payload = {
+    id: user.id,
+  };
+
+  const options = {
+    expiresIn: "1d",
+  };
+
+  return jwt.sign(payload, jwtSecret, options);
 }
 
 module.exports = router;
