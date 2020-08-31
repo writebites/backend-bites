@@ -13,7 +13,7 @@ router.post("/register", userPassCheck, (req, res) => {
   Users.add(user)
     .then((id) => {
       const token = signToken(user);
-      res.status(201).json({ token });
+      res.status(201).json({ message: "Successfully registered user to database." });
     })
     .catch((err) => {
       console.log(err);
