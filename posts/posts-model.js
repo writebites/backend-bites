@@ -1,6 +1,3 @@
-// Edit post
-// Delete post
-
 const db = require('../database/db-config');
 
 module.exports = {
@@ -8,7 +5,8 @@ module.exports = {
     getPostById,
     getUserIdByUsername,
     getPostsByUserId,
-    update
+    update,
+    remove
 }
 
 function add(post) {
@@ -37,6 +35,10 @@ function update(post_id, changes) {
             .catch(err => {
                 console.log(err);
             })
+}
+
+function remove(post_id) {
+    return db('posts').where({ id: post_id }).del();
 }
 
 
