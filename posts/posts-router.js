@@ -49,6 +49,27 @@ router.get('/', (req, res) => {
 })
 
 
+router.put('/:id', (req, res) => {
+    Posts
+        .update(req.params.id, req.body)
+            .then(count => {
+                if (count > 0) {
+                    Posts
+                        .getPostById(req.params.id)
+                        .then(post => {
+                            res.status(200).json(post);
+                        })
+                        .catch(err => {
+                            console.log(err);
+                            res.status(500).json('Failed to retrieve post from database.')
+                        })
+                }
+            })
+            .catch(err => {
+                res.status(500).json('Error updating post in database.')
+            })
+})
+
 // middleware
 function postValidation(req, res, next){
     if (req.body.user_id && req.body.title && req.body.body) {

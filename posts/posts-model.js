@@ -7,7 +7,8 @@ module.exports = {
     add,
     getPostById,
     getUserIdByUsername,
-    getPostsByUserId
+    getPostsByUserId,
+    update
 }
 
 function add(post) {
@@ -24,6 +25,18 @@ function getUserIdByUsername(input_username) {
 
 function getPostsByUserId(input_user_id) {
     return db('posts').where({ user_id: input_user_id })
+}
+
+function update(post_id, changes) {
+    return db('posts').where({ id: post_id })
+            .first()
+            .update(changes)
+            .then(count => {
+                return count
+            })
+            .catch(err => {
+                console.log(err);
+            })
 }
 
 
