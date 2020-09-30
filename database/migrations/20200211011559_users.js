@@ -1,14 +1,11 @@
-exports.up = function(knex) {
+exports.up = function (knex) {
   return knex.schema
-    .createTable("users", tbl => {
+    .createTable("users", (tbl) => {
       tbl.increments();
-      tbl
-        .varchar("username", 50)
-        .notNullable()
-        .unique();
+      tbl.varchar("username", 50).notNullable().unique();
       tbl.varchar("password", 3000).notNullable();
     })
-    .createTable("posts", tbl => {
+    .createTable("posts", (tbl) => {
       tbl.increments();
       tbl.varchar("title", 255).notNullable();
       tbl.varchar("body", 3000).notNullable();
@@ -21,7 +18,7 @@ exports.up = function(knex) {
         .onDelete("CASCADE")
         .onUpdate("CASCADE");
     })
-    .createTable("critiques", tbl => {
+    .createTable("critiques", (tbl) => {
       tbl.increments();
       tbl.integer("star_rating");
       tbl.varchar("body", 1000).notNullable();
@@ -42,7 +39,7 @@ exports.up = function(knex) {
         .onDelete("CASCADE")
         .onUpdate("CASCADE");
     })
-    .createTable("users_about", tbl => {
+    .createTable("users_about", (tbl) => {
       tbl
         .integer("user_id")
         .unsigned()
@@ -58,7 +55,7 @@ exports.up = function(knex) {
     });
 };
 
-exports.down = function(knex) {
+exports.down = function (knex) {
   return knex.schema
     .dropTableIfExists("users_about")
     .dropTableIfExists("critiques")

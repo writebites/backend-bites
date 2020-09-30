@@ -1,9 +1,9 @@
-const db = require('../database/db-config');
+const db = require("../database/db-config");
 
 module.exports = {
-    add
-}
+  add,
+};
 
 function add(user) {
-    return db('users').insert(user);
+  return db("users").insert(user);
 }
